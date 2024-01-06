@@ -1,17 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+
+function User() {
+  const [user, setUser] = useState({name: 'Esia',age: 2});
+
+  
+  function handleNameChange(event){
+    setUser({...user, name: event.target.value});
+  }
+
+  function handleAgeChange(event){
+    setUser({...user, age: event.target.value});
+  }
+ 
+  return(
+  <><div>
+      <h3> Имя: {user.name}</h3>
+      <h3> Возраст: {user.age}</h3>
+    </div><div>
+        <p> Имя : <input type='text' value={user.name} onChange={handleNameChange} /></p>
+        <p> возраст : <input type='number' min="0"  max="100" value={user.age} onChange={handleAgeChange} /></p>
+      </div></>
+  
+  
+  
+  );
+}
+
+    
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  < >
+    <User />
+  </ >
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
