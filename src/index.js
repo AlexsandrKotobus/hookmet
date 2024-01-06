@@ -7,7 +7,6 @@ import App from './App';
 function User() {
   const [user, setUser] = useState({name: 'Esia',age: 2});
 
-  
   function handleNameChange(event){
     setUser({...user, name: event.target.value});
   }
