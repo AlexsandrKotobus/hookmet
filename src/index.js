@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
+import React, {useState, useRef, useEffect} from 'react'
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 
+function UserForm(){
+  // определяет начальное состояние в виде переменной name
+  const [name, setName] = useState("Esianka");
+  // вместе с состоянием компонента определяем ссылку nameRef
+  // эффект срабатывает при любых изменениях значения name
+  const nameRef = useRef(name);
+ // Ее начальное значение - это значение переменной name. И при каждом
+  //  изменении переменной name соответственно меняем и значение в ссылке nameRef. 
+  // Для этого определяем эффект с помощью хука useEffect:
 
-function User() {
-  const [user, setUser] = useState({name: 'Esia',age: 2});
+  useEffect(()=>{
+    nameRef.current = name;
+   }, [name]);
 
-  function handleNameChange(event){
-    setUser({...user, name: event.target.value});
-  }
-
-  function handleAgeChange(event){
-    setUser({...user, age: event.target.value});
-  }
- 
+  
+  const changeName = (event) => {console.log('changeName', event.target.value); setName(event.target.value)};
+  // Для имитации удаления компонента и завершения его жизненного цикла 
+  // в нем предусмотрена кнопка, по нажатию на которую мы ожидаем, 
+  // что произойдет сохранение значения переменной name в localStorage.
+  //  Однако поведение программы будет несколько иное
+  const unmount =()=> {console.log('unmount'); root.unmount(); 
+    }
   return(
-  <><div>
-      <h3> Имя: {user.name}</h3>
-      <h3> Возраст: {user.age}</h3>
-    </div><div>
-        <p> Имя : <input type='text' value={user.name} onChange={handleNameChange} /></p>
-        <p> возраст : <input type='number' min="0"  max="100" value={user.age} onChange={handleAgeChange} /></p>
-      </div></>
-  
-  
-  
-  );
+    <div>
+      <h3>Имя : {name} </h3>
+      <div>
+        <p>Имя: <input type='text' value={name} onChange={changeName}/> </p>
+        <button onClick={unmount}>Unmount</button>
+      </div>
+    </div>
+  )
 }
-
-    
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  < >
-    <User />
-  </ >
+
+    <UserForm/>
+
 );
 
